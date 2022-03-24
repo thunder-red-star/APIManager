@@ -3,3 +3,5 @@
 "250px"></img><br><img width="350px" src="https://user-images.githubusercontent.com/67127399/159924299-b5cb3d8f-5f57-4869-a673-04f1a85ab94d.png" alt="APIManager Banner Text"></img>
 </p>
 <hr>
+# APIManager
+The best library to manage the REST APIs you use since node-fetch!
