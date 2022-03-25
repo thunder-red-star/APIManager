@@ -1,32 +1,32 @@
-const nodeFetch = require('node-fetch');
 const Axios = require('axios');
-const request = require('request');
-const superagent = require('superagent');
+
 const fs = require('fs');
 
 module.exports = class {
     constructor (options = {}) {
-        if (!options.fetcher) {
-            console.log("No fetcher option provided, using node-fetch as default");
-            this.fetcher = nodeFetch;
+        this.options = options;
+        this.endpoints = {};
+    }
+
+    createEndpointCategory (category) {
+        this.endpoints[category] = {};
+    }
+
+    addEndpoint (endpoint, category) {
+        if (!this.endpoints[category]) {
+            this.createEndpointCategory(category);
         }
-        else {
-            if (options.fetcher == "node-fetch") {
-                this.fetcher = nodeFetch;
-            }
-            else if (options.fetcher == "axios") {
-                this.fetcher = Axios;
-            }
-            else if (options.fetcher == "request") {
-                this.fetcher = request;
-            }
-            else if (options.fetcher == "superagent") {
-                this.fetcher = superagent;
-            }
-            else {
-                console.log("Invalid fetcher type, using node-fetch as default");
-                this.fetcher = nodeFetch;
-            }
-        }
+
+        this.endpoints[category][endpoint] = {};
+    }
+
+    dumpToFile (filePath) {
+        fs.writeFileSync(filePath, JSON.stringify(this, null, 4));
+    }
+
+    load (filePath) {
+        let data = fs.readFileSync(filePath, { encoding: 'utf8' });
+        let json = JSON.parse(data);
+        this.endpoints = json.endpoints;
     }
 }
