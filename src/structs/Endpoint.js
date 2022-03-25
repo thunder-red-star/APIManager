@@ -58,7 +58,7 @@ module.exports = class Endpoint {
         if (this.quota != null && this.quota <= this.usages) {
             throw new Error("Endpoint quota exceeded");
         }
-        let res = await Axios.patch(this.url, options);
+        let res = await Axios.get(this.url, options);
         this.usages++;
         return res;
     }
