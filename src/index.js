@@ -3,8 +3,8 @@ const Axios = require('axios');
 const fs = require('fs');
 const path = require('path');
 
-const Endpoint = require('./structs/endpoint');
-const Category = require('./structs/category');
+const Endpoint = require('./structs/Endpoint');
+const Category = require('./structs/Category');
 
 module.exports = class {
     constructor (options = {}) {
