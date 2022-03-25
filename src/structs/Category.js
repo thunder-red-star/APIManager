@@ -1,3 +1,5 @@
+const Endpoint = require('./Endpoint');
+
 module.exports = class {
     /**
      * @param {string} name
