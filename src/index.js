@@ -20,7 +20,6 @@ module.exports = class {
         if (!this.endpoints[category]) {
             this.createEndpointCategory(category);
         }
-
         this.endpoints[category][endpoint] = {};
     }
 
@@ -38,3 +37,6 @@ module.exports = class {
         return this.endpoints[category];
     }
 }
+
+module.exports.Endpoint = Endpoint;
+module.exports.Category = Category;
