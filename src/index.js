@@ -1,6 +1,10 @@
 const Axios = require('axios');
 
 const fs = require('fs');
+const path = require('path');
+
+const Endpoint = require('./structs/endpoint');
+const Category = require('./structs/category');
 
 module.exports = class {
     constructor (options = {}) {
@@ -28,5 +32,9 @@ module.exports = class {
         let data = fs.readFileSync(filePath, { encoding: 'utf8' });
         let json = JSON.parse(data);
         this.endpoints = json.endpoints;
+    }
+
+    getCategory (category) {
+        return this.endpoints[category];
     }
 }
