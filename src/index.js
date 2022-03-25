@@ -51,7 +51,7 @@ module.exports = class {
         }
     }
 
-    dumpToFile (filePath) {
+    dump (filePath) {
         fs.writeFileSync(filePath, JSON.stringify(this, null, 4));
     }
 
