@@ -12,15 +12,43 @@ module.exports = class {
         this.endpoints = {};
     }
 
-    createEndpointCategory (category) {
-        this.endpoints[category] = {};
+    createEndpointCategory (categoryName) {
+        if (!categoryName) {
+            throw new Error('Category name is required');
+        }
+        else {
+            if (this.endpoints[categoryName]) {
+                throw new Error(`Category ${categoryName} already exists`);
+            }
+            else {
+                this.endpoints[categoryName] = new Category(categoryName);
+            }
+        }
+        return this.endpoints[categoryName];
     }
 
-    addEndpoint (endpoint, category) {
-        if (!this.endpoints[category]) {
-            this.createEndpointCategory(category);
+    addEndpoint (endpoint, categoryName) {
+        if (!endpoint) {
+            throw new Error('Endpoint is required');
         }
-        this.endpoints[category][endpoint] = {};
+        else {
+            if (!(endpoint instanceof Endpoint)) {
+                throw new Error('Endpoint must be an instance of Endpoint');
+            }
+            else {
+                if (!categoryName) {
+                    throw new Error('Category name is required');
+                }
+                else {
+                    if (!this.endpoints[categoryName]) {
+                        throw new Error(`Category ${categoryName} does not exist`);
+                    }
+                    else {
+                        this.endpoints[categoryName].addEndpoint(endpoint);
+                    }
+                }
+            }
+        }
     }
 
     dumpToFile (filePath) {
@@ -30,11 +58,21 @@ module.exports = class {
     load (filePath) {
         let data = fs.readFileSync(filePath, { encoding: 'utf8' });
         let json = JSON.parse(data);
-        this.endpoints = json.endpoints;
+        // Use inbuilt static fromJSON methods on categories and endpoints
+        let endpoints = json.endpoints;
+        for (let categoryName in endpoints) {
+            let category = endpoints[categoryName];
+            let categoryInstance = this.createEndpointCategory(categoryName);
+            for (let endpointName in category) {
+                let endpoint = category[endpointName];
+                let endpointInstance = Endpoint.fromJSON(endpoint);
+                categoryInstance.addEndpoint(endpointInstance);
+            }
+        }
     }
 
-    getCategory (category) {
-        return this.endpoints[category];
+    getCategory (categoryName) {
+        return this.endpoints[categoryName];
     }
 }
 
