@@ -1,4 +1,7 @@
 {
+  "name": "APIManager",
+  "version": "1.0.0",
+  "description": "APIManager is a Node library to help you manage all the REST API endpoints in your application.",
   "dependencies": {
     "axios": "^0.26.1"
   }
