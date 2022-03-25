@@ -36,12 +36,12 @@ module.exports = class {
     }
 
     /**
-     * @param {string} endpoint
+     * @param {Endpoint} endpoint
      * @returns {boolean}
      * @description Adds an endpoint to the category.
      */
     addEndpoint (endpoint) {
-        if (!(typeof endpoint === 'string' || typeof endpoint === 'object')) throw new Error('Endpoint must be a string or object.');
+        if (!(endpoint instanceof Endpoint)) throw new Error('Endpoint must be an instance of Endpoint.');
         this.endpoints.push(endpoint);
         return true;
     }

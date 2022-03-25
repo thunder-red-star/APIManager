@@ -4,11 +4,11 @@ let apiManager = new APIManager();
 
 apiManager.createEndpointCategory('category1', 'Category 1');
 
-apiManager.getCategory('category1').addEndpoint('https://google.com', 'My First Endpoint');
-apiManager.getCategory('category1').addEndpoint('https://bing.com', 'My Second Endpoint');
-apiManager.getCategory('category1').addEndpoint('https://yahoo.com', 'My Third Endpoint');
-apiManager.getCategory('category1').addEndpoint('https://duckduckgo.com', 'My Fourth Endpoint');
-apiManager.getCategory('category1').addEndpoint('https://facebook.com', 'My Fifth Endpoint');
+let newEndpoint = new APIManager.Endpoint('https://api.kanye.rest', 'Kanye', '0', '5');
+apiManager.getCategory('category1').addEndpoint(newEndpoint);
+
+let secondEndpoint = new APIManager.Endpoint('https://www.google.com', 'Google', '0', '5');
+apiManager.getCategory('category1').addEndpoint(secondEndpoint);
 
 let res = apiManager.getCategory('category1').getRandomEndpoint().get();
 
