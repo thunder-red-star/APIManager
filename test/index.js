@@ -12,7 +12,12 @@ apiManager.getCategory('category1').addEndpoint(secondEndpoint);
 
 (async () => {
     let res = await apiManager.getCategory('category1').getRandomEndpoint().get();
-    console.log(res);
+    await apiManager.getCategory('category1').getRandomEndpoint().get();
+    await apiManager.getCategory('category1').getRandomEndpoint().get();
+    await apiManager.getCategory('category1').getRandomEndpoint().get();
+    await apiManager.getCategory('category1').getRandomEndpoint().get();
 })();
 
 apiManager.dump("dump.json");
+
+console.log("Dumped! Check dump.json");

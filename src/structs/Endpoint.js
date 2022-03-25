@@ -44,7 +44,7 @@ module.exports = class Endpoint {
         return {
             url: this.url,
             name: this.name,
-            counter: this.usages,
+            usages: this.usages,
             quota: this.quota
         };
     }
