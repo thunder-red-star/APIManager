@@ -7,11 +7,19 @@ const Endpoint = require('./structs/Endpoint');
 const Category = require('./structs/Category');
 
 module.exports = class {
+    /**
+     * @param options
+     */
     constructor (options = {}) {
         this.options = options;
         this.endpoints = {};
     }
 
+    /**
+     * @param {string} categoryName
+     * @returns {*}
+     * @description Creates a new endpoint category
+     */
     createEndpointCategory (categoryName) {
         if (!categoryName) {
             throw new Error('Category name is required');
@@ -27,6 +35,11 @@ module.exports = class {
         return this.endpoints[categoryName];
     }
 
+    /**
+     * @param {string} endpoint
+     * @param {string} categoryName
+     * @description Creates a new endpoint in a category.
+     */
     addEndpoint (endpoint, categoryName) {
         if (!endpoint) {
             throw new Error('Endpoint is required');
@@ -51,10 +64,18 @@ module.exports = class {
         }
     }
 
+    /**
+     * @description Dumps the entire manager to a file, to be loaded in future sessions.
+     * @param {string} filePath
+     */
     dump (filePath) {
         fs.writeFileSync(filePath, JSON.stringify(this, null, 4));
     }
 
+    /**
+     * @param {string} filePath
+     * @description Loads the manager from a file.
+     */
     load (filePath) {
         let data = fs.readFileSync(filePath, { encoding: 'utf8' });
         let json = JSON.parse(data);
@@ -71,8 +92,38 @@ module.exports = class {
         }
     }
 
+    /**
+     * @param {string} filePath
+     * @description Static function that Loads the manager from a file.
+     */
+    static load (filePath) {
+        let manager = new this();
+        manager.load(filePath);
+        return manager;
+    }
+
+    /**
+     * @description Get a category by name.
+     * @param {string} categoryName
+     * @returns {Category}
+     */
     getCategory (categoryName) {
         return this.endpoints[categoryName];
+    }
+
+    /**
+     * @description Get a random endpoint from a named category.
+     * @param {string} categoryName
+     * @returns {Endpoint}
+     */
+    getRandomEndpoint(categoryName) {
+        let category = this.getCategory(categoryName);
+        if (category) {
+            return category.getRandomEndpoint();
+        }
+        else {
+            throw new Error(`Category ${categoryName} does not exist`);
+        }
     }
 }
 

@@ -14,4 +14,4 @@ let res = apiManager.getCategory('category1').getRandomEndpoint().get();
 
 console.log(res);
 
-apiManager.dump("data/dump.json");
+apiManager.dump("dump.json");
