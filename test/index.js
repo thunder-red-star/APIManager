@@ -10,8 +10,9 @@ apiManager.getCategory('category1').addEndpoint(newEndpoint);
 let secondEndpoint = new APIManager.Endpoint('https://www.google.com', 'Google', '0', '5');
 apiManager.getCategory('category1').addEndpoint(secondEndpoint);
 
-let res = apiManager.getCategory('category1').getRandomEndpoint().get();
-
-console.log(res);
+(async () => {
+    let res = await apiManager.getCategory('category1').getRandomEndpoint().get();
+    console.log(res);
+})();
 
 apiManager.dump("dump.json");
